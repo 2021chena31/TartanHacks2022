@@ -58,7 +58,7 @@ def starting_screen():
                 current_screen[0] = "how_to_play_screen"
             if 257 <= x <= 349 and 390 <= y <= 417:
                 current_screen[0] = "about_screen"
-            print(x,y)
+            #print(x,y)
 
    #remake screen
     screen.fill(color_background)
@@ -109,7 +109,7 @@ def level(level):
     while (counter < 3):
         #more than 75% incorrect
         if (incorrect_count > 1):
-            print("FAIL SCREEN NEEDED")
+            #print("FAIL SCREEN NEEDED")
             current_screen[0] = "fail_screen"
             break
        
@@ -164,7 +164,7 @@ def level(level):
                                     #correct_flag = True
                                     counter += 1
                                 else:
-                                    print("Incorrect")
+                                    #print("Incorrect")
                                     incorrect_answer()
                                     incorrect_count += 1
                                 answered_flag = True
@@ -172,12 +172,12 @@ def level(level):
 
                             if 190 <= x <= 535 and 300 <= y <= 330:
                                 if (bird_location[0] == 300):
-                                    print("Correct")
+                                    #print("Correct")
                                     correct_answer()
                                     #correct_flag = True
                                     counter += 1
                                 else:
-                                    print("Incorrect")
+                                    #print("Incorrect")
                                     incorrect_answer()
                                     incorrect_count += 1
                                 answered_flag = True
@@ -185,12 +185,12 @@ def level(level):
 
                             if 190 <= x <= 535 and 350 <= y <= 380:
                                 if (bird_location[0] == 350):
-                                    print("Correct")
+                                    #print("Correct")
                                     correct_answer()
                                     #correct_flag = True
                                     counter += 1
                                 else:
-                                    print("Incorrect")
+                                    #print("Incorrect")
                                     incorrect_answer()
                                     incorrect_count += 1
                                 answered_flag = True
@@ -198,12 +198,12 @@ def level(level):
 
                             if 190 <= x <= 535 and 400 <= y <= 430:
                                 if (bird_location[0] == 400):
-                                    print("Correct")
+                                    #print("Correct")
                                     correct_answer()
                                     #correct_flag = True
                                     counter += 1
                                 else:
-                                    print("Incorrect")
+                                    #print("Incorrect")
                                     incorrect_answer()
                                     incorrect_count += 1
                                 answered_flag = True
@@ -213,7 +213,7 @@ def level(level):
                 break
         
     current_level[0] += 1
-    print(current_level[0])
+    #print(current_level[0])
 
 
 def intermission(level):
@@ -253,8 +253,8 @@ def main_game():
 
         intermission(current_level[0])
         level(current_level[0])
-        print("level:" + str(current_level))
-        print(current_screen[0])
+        #print("level:" + str(current_level))
+        #print(current_screen[0])
 
         if (current_screen[0] == "fail_screen"):
             return
