@@ -12,7 +12,7 @@ font_sub = pygame.font.SysFont('Corbel',35)
 font_subheading = pygame.font.SysFont('Corbel', 20)
 
 #set initial screens and level information
-current_screen = ["main_screen"]
+current_screen = ["starting_screen"]
 current_level = [0]
 current_score = 0
 
@@ -74,7 +74,6 @@ def starting_screen():
 
 
 def answer_order(answer_order):
-
     return answer_order
 
 #helper for quiz guess
@@ -119,10 +118,10 @@ def level(level):
         #answer_order = []
         #answer_order = 
         screen.fill(color_background)
-        screen.blit(bird_a_text, (250,250))
-        screen.blit(bird_b_text, (width/2.2,height - height/2.3))
-        screen.blit(bird_c_text, (width/2.7,height - height/3))
-        screen.blit(bird_correct, (width/2.3,height - height/4.5))
+        screen.blit(bird_a_text, (200,250))
+        screen.blit(bird_b_text, (200,300))
+        screen.blit(bird_c_text, (200,350))
+        screen.blit(bird_correct, (200,400))
         screen.blit(image, (200,10))
         pygame.display.update()
 
@@ -135,6 +134,26 @@ def level(level):
                     #if click on back button, break, go to main_screen
 
                     if event.type == pygame.MOUSEBUTTONDOWN:
+                        '''
+                        
+                        '''
+                        if event.type == pygame.MOUSEBUTTONDOWN:
+                            pos = pygame.mouse.get_pos()
+                            x = pos[0]
+                            y = pos[1]
+                            if 190 <= x <= 535 and 250 <= y <= 280:
+                                #bird a location
+                                break 
+                            if 190 <= x <= 535 and 300 <= y <= 330:
+                                #bird b location
+                                break 
+                            if 190 <= x <= 535 and 350 <= y <= 380:
+                                #bird c location
+                                break 
+                            if 190 <= x <= 535 and 400 <= y <= 430:
+                                #correct bird location
+                                break
+
                         correct_flag = True #REMOVE THIS LATER
                         counter += 1
                         print("counter")
@@ -147,17 +166,44 @@ def level(level):
 
 
 def intermission(level):
-    print("")
+    while True:
+        continent = continents_list[level]
+        image = pygame.image.load(os.path.join("Intermission/", continent + ".jpg"))
+        title = font_main.render(continent, True , color_font) 
+        
+        screen.fill(color_background)
+        screen.blit(image, (150,100))
+        screen.blit(title, (150,5))
 
+        decription_list = [ "Your journey starts in North America!",
+                            "Heading south to South America!",
+                            "Now, hop across the Atlantic to Europe!",
+                            "Travel to the other Eurasian Continent: Asia!",
+                            "Take a safari down to Africa!",
+                            "Go by the \"Land Down Under\"!",
+        ]
+        
+        description = font_subheading.render(decription_list[level], True, color_font)
+        screen.blit(description, (150, 350))
+        pygame.display.update()
+
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT: 
+                sys.exit()
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                return
+
+            
 
 def main_game():
+    
     while (current_level[0] < 6):
         for event in pygame.event.get():
             if event.type == pygame.QUIT: 
                 sys.exit()
             #if click on back button, break, go to main_screen
 
-        #also if it clicks on the back button
+        intermission(current_level[0])
         if (level(current_level[0]) == "main_screen"):
             break
         print("level:" + str(current_level))
@@ -166,11 +212,21 @@ def main_game():
         current_screen[0] = "win_screen"    
 
 def howToPlay():
+    descriptionList = ["Travel to all around the world and learn about birds!",
+                        "",
+                       "Pass the bird quiz for every continent by identifying", 
+                       "at least 3/4 of the birds correctly.",
+                       "",
+                       "Become an expert BirdVenturer by traveling to all",
+                       "of the 6 available continents!"]
     welcome = font_main.render("Welcome~ ", True, color_font)
-    description = font_subheading.render("Travel to countries and learn about birds!", True, color_font)
+    #description = font_subheading.render("Travel to countries and learn about birds!", True, color_font)
     screen.fill(color_background)
     screen.blit(welcome, (width/3.5,height/4))
-    screen.blit(description, (100,300)) #NEED TO CENTER THIS
+    #screen.blit(description, (100,300)) #NEED TO CENTER THIS
+    for i in range(len(descriptionList)):
+        description = font_subheading.render(descriptionList[i], True, color_font)
+        screen.blit(description, (width/6, int(height/2) + 20*i))
     pygame.display.update()
 
     for event in pygame.event.get():
