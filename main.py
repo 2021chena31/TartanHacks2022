@@ -12,7 +12,7 @@ font_sub = pygame.font.SysFont('Corbel',35)
 font_subheading = pygame.font.SysFont('Corbel', 20)
 
 #set initial screens and level information
-current_screen = ["fail_screen"]
+current_screen = ["main_screen"]
 current_level = [0]
 current_score = 0
 
@@ -36,7 +36,7 @@ bird_sa = ["Choco Toucan", "Hyacinth Macaw", "Crested Quetzal", "Harpy Eagle"]
 bird_eu = ["Eurasian Blue Tit","Eurasian Collared Dove","Common Magpie","Common Nightingale"]
 bird_asia = ["Red-Crowned Crane","Giant Ibis","Chinese Nuthatch","Indian Vulture"]
 bird_afr = ["Common Ostrich","Lesser Flamingo","Secretary Bird", "Shoebill"]
-bird_oce = ["Kiwi", "Laughing Kookaburra", "Southern Cassowary", ""]
+bird_oce = ["Kiwi", "Laughing Kookaburra", "Southern Cassowary", "Red Wattlebird"]
 continents_birdlist = [bird_na,bird_sa,bird_eu,bird_asia,bird_afr,bird_oce]
 continents_list = ["North America", "South America", "Europe", "Asia", "Africa","Oceania"] #, "Antartica"]
 
@@ -71,6 +71,8 @@ def starting_screen():
     screen.blit(about, (width/2.3,height - height/4.5))
     pygame.display.update()
 
+
+
 def answer_order(answer_order):
 
     return answer_order
@@ -84,7 +86,9 @@ def level(level):
     counter = 0
     incorrect_count = 0
     used_birds = []
+
     while (counter < 3):
+        #more than 75% incorrect
         if (incorrect_count > 1):
             current_screen[0] = "fail_screen"
             break
@@ -94,15 +98,13 @@ def level(level):
 
         #pull random bird, make sure not duplicate
         multiple_choices = random.sample(continents_birdlist[level], 4)
-        print(multiple_choices)
         randomBird = multiple_choices[0]
         while (randomBird in used_birds):
-            #randomIndex = random.randint(0,3)
-            #randomBird = continents_birdlist[level][randomIndex]
             multiple_choices = random.sample(continents_birdlist[level], 4)
             randomBird = multiple_choices[0]
         used_birds.append(randomBird)
 
+        #get bird image
         image = pygame.image.load(os.path.join("BirdImages/" + country, randomBird + ".jpg"))
         
         birda = multiple_choices[1]
@@ -121,7 +123,7 @@ def level(level):
         screen.blit(bird_b_text, (width/2.2,height - height/2.3))
         screen.blit(bird_c_text, (width/2.7,height - height/3))
         screen.blit(bird_correct, (width/2.3,height - height/4.5))
-        screen.blit(image, (150,0))
+        screen.blit(image, (200,10))
         pygame.display.update()
 
         correct_flag = False
@@ -144,9 +146,12 @@ def level(level):
     current_level[0] += 1
 
 
+def intermission(level):
+    print("")
+
 
 def main_game():
-    while (current_level[0] < 7):
+    while (current_level[0] < 6):
         for event in pygame.event.get():
             if event.type == pygame.QUIT: 
                 sys.exit()
@@ -168,24 +173,47 @@ def howToPlay():
     screen.blit(description, (100,300)) #NEED TO CENTER THIS
     pygame.display.update()
 
+    for event in pygame.event.get():
+            if event.type == pygame.QUIT: 
+                sys.exit()
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                current_screen[0] = "starting_screen"
+                break
+
 def aboutInfo():
-    aboutInfo = font_main.render("Bird Walkers", True, color_font)
-    description = font_subheading.render("You are a budding bird traveling wanting to travel the world", True, color_font)
+    descriptionList = ["You are a budding birdie wanting to travel the world",
+                       "but COVID19 destroyed all your plans :(", 
+                       "",
+                       "Never fear! You can travel to countries through Bird Walker!",
+                       "",
+                       "Travel to different continents and learn about birds!",
+                       "We promise you'll have a hoot! ;)"]
+    aboutInfo = font_main.render("Hello Birdventurer!", True, color_font)
     screen.fill(color_background)
-    screen.blit(aboutInfo, (width/3.5,height/4))
-    screen.blit(description, (100,300)) #NEED TO CENTER THIS
+    for i in range(len(descriptionList)):
+        description = font_subheading.render(descriptionList[i], True, color_font)
+        screen.blit(description, (width/6, int(height/4) + 20*i))
+    screen.blit(aboutInfo, (width/6,height/10))
+    
     pygame.display.update()
+
+    for event in pygame.event.get():
+            if event.type == pygame.QUIT: 
+                sys.exit()
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                current_screen[0] = "starting_screen"
+                break
     
 
 def fail_screen():
     ohno = font_main.render("Oh no!", True, color_font)
-    explanation = font_sub.render("You got more than 75 percent incorrect on a quiz.", True, color_font)
+    explanation = font_sub.render("You got more than 75% incorrect on a quiz.", True, color_font)
     play_again = font_subheading.render("Would you like to play again?", True, color_font)
 
     screen.fill(color_background)
-    screen.blit(ohno, (width/3.5,height/4))
-    screen.blit(explanation, (100,300)) #NEED TO CENTER THIS
-    screen.blit(play_again, (100,400)) #NEED TO CENTER THIS
+    screen.blit(ohno, (width/3,height/4))
+    screen.blit(explanation, (10,height/2))
+    screen.blit(play_again, (width/3,height - height/4))
     pygame.display.update()
 
     
@@ -204,12 +232,12 @@ def fail_screen():
 def win_screen():
     congrats = font_main.render("Congratulations!", True, color_font)
     win = font_sub.render("You traveled around the world!", True, color_font)
-    click = font_subheading.render("Please click to continue.", True, color_font)
+    click = font_subheading.render("Please click anywhere to continue.", True, color_font)
 
     screen.fill(color_background)
-    screen.blit(congrats, (width/3.5,height/4))
-    screen.blit(win, (100,300)) #NEED TO CENTER THIS
-    screen.blit(click, (100,400)) #NEED TO CENTER THIS
+    screen.blit(congrats, (width/6,height/4))
+    screen.blit(win, (100,250))
+    screen.blit(click, (150,350)) 
     pygame.display.update()
 
     
