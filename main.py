@@ -72,13 +72,33 @@ def starting_screen():
     pygame.display.update()
 
 
+def correct_answer():
+    screen.fill(color_background)
+    correct = font_main.render('CORRECT!' , True , (0,255,0))
+    screen.blit(correct, (width/4, height/3))
+    pygame.display.update()
 
-def answer_order(answer_order):
-    return answer_order
+    time.sleep(2)
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT: 
+            sys.exit()
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            return
 
-#helper for quiz guess
-def check_answer(answer, click_index):
-    print("sdfdsfd")
+    
+
+def incorrect_answer():
+    screen.fill(color_background)
+    incorrect = font_main.render('INCORRECT.' , True , (255,0,0))
+    screen.blit(incorrect, (width/4, height/3))
+    pygame.display.update()
+
+    time.sleep(2)
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT: 
+            sys.exit()
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            return
 
 #helper for main_game
 def level(level):
@@ -89,6 +109,7 @@ def level(level):
     while (counter < 3):
         #more than 75% incorrect
         if (incorrect_count > 1):
+            print("FAIL SCREEN NEEDED")
             current_screen[0] = "fail_screen"
             break
        
@@ -115,54 +136,84 @@ def level(level):
         bird_c_text = font_sub.render(birdc, True, color_font)
         bird_correct = font_sub.render(randomBird, True, color_font)
 
-        #answer_order = []
-        #answer_order = 
+        location_list = [250,300,350,400]
+        bird_location = random.sample(location_list, 4)
         screen.fill(color_background)
-        screen.blit(bird_a_text, (200,250))
-        screen.blit(bird_b_text, (200,300))
-        screen.blit(bird_c_text, (200,350))
-        screen.blit(bird_correct, (200,400))
+        screen.blit(bird_a_text, (200,bird_location[1]))
+        screen.blit(bird_b_text, (200,bird_location[2]))
+        screen.blit(bird_c_text, (200,bird_location[3]))
+        screen.blit(bird_correct, (200,bird_location[0]))
         screen.blit(image, (200,10))
         pygame.display.update()
 
-        correct_flag = False
+        answered_flag = False
 
         while True:
             for event in pygame.event.get():
                     if event.type == pygame.QUIT: 
                         sys.exit()
-                    #if click on back button, break, go to main_screen
 
                     if event.type == pygame.MOUSEBUTTONDOWN:
-                        '''
-                        
-                        '''
                         if event.type == pygame.MOUSEBUTTONDOWN:
                             pos = pygame.mouse.get_pos()
                             x = pos[0]
                             y = pos[1]
                             if 190 <= x <= 535 and 250 <= y <= 280:
-                                #bird a location
+                                if (bird_location[0] == 250):
+                                    correct_answer()
+                                    #correct_flag = True
+                                    counter += 1
+                                else:
+                                    print("Incorrect")
+                                    incorrect_answer()
+                                    incorrect_count += 1
+                                answered_flag = True
                                 break 
+
                             if 190 <= x <= 535 and 300 <= y <= 330:
-                                #bird b location
+                                if (bird_location[0] == 300):
+                                    print("Correct")
+                                    correct_answer()
+                                    #correct_flag = True
+                                    counter += 1
+                                else:
+                                    print("Incorrect")
+                                    incorrect_answer()
+                                    incorrect_count += 1
+                                answered_flag = True
                                 break 
+
                             if 190 <= x <= 535 and 350 <= y <= 380:
-                                #bird c location
+                                if (bird_location[0] == 350):
+                                    print("Correct")
+                                    correct_answer()
+                                    #correct_flag = True
+                                    counter += 1
+                                else:
+                                    print("Incorrect")
+                                    incorrect_answer()
+                                    incorrect_count += 1
+                                answered_flag = True
                                 break 
+
                             if 190 <= x <= 535 and 400 <= y <= 430:
-                                #correct bird location
+                                if (bird_location[0] == 400):
+                                    print("Correct")
+                                    correct_answer()
+                                    #correct_flag = True
+                                    counter += 1
+                                else:
+                                    print("Incorrect")
+                                    incorrect_answer()
+                                    incorrect_count += 1
+                                answered_flag = True
                                 break
 
-                        correct_flag = True #REMOVE THIS LATER
-                        counter += 1
-                        print("counter")
-                        break
-
-            if correct_flag:
+            if answered_flag:
                 break
         
     current_level[0] += 1
+    print(current_level[0])
 
 
 def intermission(level):
@@ -192,24 +243,25 @@ def intermission(level):
                 sys.exit()
             if event.type == pygame.MOUSEBUTTONDOWN:
                 return
-
-            
+    
 
 def main_game():
-    
     while (current_level[0] < 6):
         for event in pygame.event.get():
             if event.type == pygame.QUIT: 
                 sys.exit()
-            #if click on back button, break, go to main_screen
 
         intermission(current_level[0])
-        if (level(current_level[0]) == "main_screen"):
-            break
+        level(current_level[0])
         print("level:" + str(current_level))
+        print(current_screen[0])
 
-    if (current_level[0] > 1):
+        if (current_screen[0] == "fail_screen"):
+            return
+
+    if (current_level[0] > 6):
         current_screen[0] = "win_screen"    
+
 
 def howToPlay():
     descriptionList = ["Travel to all around the world and learn about birds!",
