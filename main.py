@@ -332,17 +332,19 @@ def fail_screen():
             if event.type == pygame.QUIT: 
                 sys.exit()
             if event.type == pygame.MOUSEBUTTONDOWN:
-                current_level[0] = 0 
-                current_screen[0] = "starting_screen"
-                break
-            if event.type == pygame.MOUSEBUTTONDOWN:
                 pos = pygame.mouse.get_pos()
                 x = pos[0]
                 y = pos[1]
+
+                #quit button
                 if 0 <= x <= 100 and 0 <= y <= 50:
                     current_screen[0] = "quit_screen"
-                # current_screen[0] = "quit_screen"
-                break
+                    break
+                
+                #else start over
+                current_level[0] = 0 
+                current_screen[0] = "starting_screen"
+                break                
             
 
 
