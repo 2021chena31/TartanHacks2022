@@ -31,7 +31,7 @@ how_to_play_button = pygame.Rect(width/4,height/4,width/2,height/2)
 about_button = pygame.Rect(0,0,100,50)
 
 #stuff for levels
-bird_na = ["Bald Eagle", "American Robin", "Canada Goose", "Mallard", "Northern Cardinal", "American Crow", "Blue Jay", "Rock Pidgeon"]
+bird_na = ["Bald Eagle", "American Robin", "Canada Goose", "Mallard", "Northern Cardinal", "American Crow", "Blue Jay", "Rock Pigeon"]
 bird_sa = ["Choco Toucan", "Hyacinth Macaw", "Crested Quetzal", "Harpy Eagle", "Araripe Manakin", "Scarlet Macaw", "Boat-Billed Heron"]
 bird_eu = ["Eurasian Blue Tit","Eurasian Collared Dove","Common Magpie","Common Nightingale", "European Starling", "European Robin", "Atlantic Puffin"]
 bird_asia = ["Red-Crowned Crane","Giant Ibis","Chinese Nuthatch","Indian Vulture", "Asian Emerald Cuckoo", "Long-Tailed Tit", "Fairy-Bluebird"]
