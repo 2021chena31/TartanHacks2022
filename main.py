@@ -259,7 +259,7 @@ def main_game():
         if (current_screen[0] == "fail_screen"):
             return
 
-    if (current_level[0] > 6):
+    if (current_level[0] > 5):
         current_screen[0] = "win_screen"    
 
 
@@ -317,11 +317,14 @@ def fail_screen():
     ohno = font_main.render("Oh no!", True, color_font)
     explanation = font_sub.render("You got more than 75% incorrect on a quiz.", True, color_font)
     play_again = font_subheading.render("Would you like to play again?", True, color_font)
+    quit = font_sub.render("Quit", True, color_font)
 
     screen.fill(color_background)
     screen.blit(ohno, (width/3,height/4))
     screen.blit(explanation, (10,height/2))
     screen.blit(play_again, (width/3,height - height/4))
+    pygame.draw.rect(screen, (255,0,0), quit_button)
+    screen.blit(quit, (width/40, height/40))
     pygame.display.update()
 
     
@@ -329,10 +332,16 @@ def fail_screen():
             if event.type == pygame.QUIT: 
                 sys.exit()
             if event.type == pygame.MOUSEBUTTONDOWN:
+                current_level[0] = 0 
                 current_screen[0] = "starting_screen"
                 break
             if event.type == pygame.MOUSEBUTTONDOWN:
-                current_screen[0] = "quit_screen"
+                pos = pygame.mouse.get_pos()
+                x = pos[0]
+                y = pos[1]
+                if 0 <= x <= 100 and 0 <= y <= 50:
+                    current_screen[0] = "quit_screen"
+                # current_screen[0] = "quit_screen"
                 break
             
 
