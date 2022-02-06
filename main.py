@@ -33,13 +33,12 @@ about_button = pygame.Rect(0,0,100,50)
 #stuff for levels
 bird_na = ["Bald Eagle", "American Robin", "Canada Goose", "Mallard"]
 bird_sa = ["Choco Toucan", "Hyacinth Macaw", "Crested Quetzal", "Harpy Eagle"]
-bird_eu = ["Eurasian Blue Tit","Eurasian Collared Dove","Common Magpie","Bohemian Waxwing"]
-bird_asia = ["Red-Crowned Crane"]
-bird_afr = []
-bird_aus = ["Kiwi", ""]
-bird_ant = []
-continents_birdlist = [bird_na,bird_sa,bird_eu,bird_asia,bird_afr,bird_aus,bird_ant]
-continents_list = ["North America", "South America", "Europe", "Asia", "Africa","Australia", "Antartica"]
+bird_eu = ["Eurasian Blue Tit","Eurasian Collared Dove","Common Magpie","Common Nightingale"]
+bird_asia = ["Red-Crowned Crane","Giant Ibis","Chinese Nuthatch","Indian Vulture"]
+bird_afr = ["Common Ostrich","Lesser Flamingo","Secretary Bird", "Shoebill"]
+bird_oce = ["Kiwi", "Laughing Kookaburra", "Southern Cassowary", ""]
+continents_birdlist = [bird_na,bird_sa,bird_eu,bird_asia,bird_afr,bird_oce]
+continents_list = ["North America", "South America", "Europe", "Asia", "Africa","Oceania"] #, "Antartica"]
 
 
 def starting_screen():
@@ -60,9 +59,6 @@ def starting_screen():
             if 257 <= x <= 349 and 390 <= y <= 417:
                 current_screen[0] = "about_screen"
             print(x,y)
-
-        #if event.type == sdfkladsfjfs
-        #   current_screen = "main_screen"
 
    #remake screen
     screen.fill(color_background)
@@ -92,9 +88,7 @@ def level(level):
         if (incorrect_count > 1):
             current_screen[0] = "fail_screen"
             break
-        #generate randombird
-        #randomIndex = random.randint(0,3)
-
+       
         #current country
         country = continents_list[level]
 
@@ -166,8 +160,22 @@ def main_game():
     if (current_level[0] > 1):
         current_screen[0] = "win_screen"    
 
-def how_to_play():
+def howToPlay():
     welcome = font_main.render("Welcome~ ", True, color_font)
+    description = font_subheading.render("Travel to countries and learn about birds!", True, color_font)
+    screen.fill(color_background)
+    screen.blit(welcome, (width/3.5,height/4))
+    screen.blit(description, (100,300)) #NEED TO CENTER THIS
+    pygame.display.update()
+
+def aboutInfo():
+    aboutInfo = font_main.render("Bird Walkers", True, color_font)
+    description = font_subheading.render("You are a budding bird traveling wanting to travel the world", True, color_font)
+    screen.fill(color_background)
+    screen.blit(aboutInfo, (width/3.5,height/4))
+    screen.blit(description, (100,300)) #NEED TO CENTER THIS
+    pygame.display.update()
+    
 
 def fail_screen():
     ohno = font_main.render("Oh no!", True, color_font)
@@ -238,6 +246,10 @@ if __name__ == '__main__':
             starting_screen()
         if (current_screen[0] == "main_screen"):
             main_game()
+        if (current_screen[0] == "how_to_play_screen"):
+            howToPlay()
+        if (current_screen[0] == "about_screen"):
+            aboutInfo()
         if (current_screen[0] == "win_screen"):
             win_screen()
         if(current_screen[0] == "quit_screen"):
